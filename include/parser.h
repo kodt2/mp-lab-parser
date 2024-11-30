@@ -63,7 +63,7 @@ public:
 		return output.str();
 	}
 
-	int evaluatePostfix(std::string& expr) {
+	float evaluatePostfix(std::string& expr) {
 		TStack<float> values_i;
 		std::stringstream ss(expr);
 		std::string token;
@@ -107,6 +107,9 @@ public:
 			}
 			outp = outp + str;
 		}
+		if (cClose == cOpen) {
+			outp = str;
+		}
 		outp = '(' + outp + ')';
 		return outp;
 	}
@@ -136,7 +139,8 @@ public:
 		}
 		return str;
 	}
-	int work(std::string expr) {
+
+	float work(std::string expr) {
 		expr = removeSpaces(expr);
 		expr = closeBrackets(expr);
 		expr = unarMinus(expr);
@@ -144,6 +148,7 @@ public:
 		std::string postfix = infixToPostfix(expr);
 		//std::cout << "Postfix Expression: " << postfix << std::endl;
 		float result = evaluatePostfix(postfix); 
+		//std::cout << result << std::endl;
 		return result;
 	}
 };
