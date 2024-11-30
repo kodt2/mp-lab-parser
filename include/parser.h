@@ -10,27 +10,13 @@ private:
 	
 public:
 
-
-	// Функция для проверки, является ли символ оператором
 	bool isOperator(char c) {
 		return c == '+' || c == '-' || c == '*' || c == '/';
 	}
 
-	// Функция для определения приоритета оператора
 	int priority(char op) {
 		if (op == '+' || op == '-') return 1;
 		if (op == '*' || op == '/') return 2;
-		return 0;
-	}
-
-	// Функция для выполнения арифметической операции
-	int applyOp(int a, int b, char op) {
-		switch (op) {
-		case '+': return a + b;
-		case '-': return a - b;
-		case '*': return a * b;
-		case '/': return a / b;
-		}
 		return 0;
 	}
 	float applyOp(float a, float b, char op) {
@@ -43,19 +29,19 @@ public:
 		return 0;
 	}
 
-	// Функция для преобразования инфиксного выражения в постфиксное
 	std::string infixToPostfix(std::string& expr) {
 		std::stringstream output;
 		TStack<char> operators;
 		for (char c : expr) {
-			if (isdigit(c)) {
+			if (isdigit(c) || c=='.' || c==',') {
 				output << c;
 			}
 			else if (isOperator(c)) {
 				while (!(operators.empty()) && priority(operators.top()) >= priority(c)) {
 					output << ' ' << operators.top();
-					operators.pop();
+					operators.pop();					
 				}
+				
 				output << ' ';
 				operators.push(c);
 			}
@@ -67,7 +53,7 @@ public:
 					output << ' ' << operators.top();
 					operators.pop();
 				}
-				operators.pop(); // Remove the '('
+				operators.pop(); 
 			}
 		}
 		while (!(operators.empty())) {
@@ -77,20 +63,21 @@ public:
 		return output.str();
 	}
 
-	// Функция для вычисления значения постфиксного выражения
 	int evaluatePostfix(std::string& expr) {
-		TStack<int> values_i;
-		TStack<float> values_f;
+		TStack<float> values_i;
 		std::stringstream ss(expr);
 		std::string token;
 		while (ss >> token) {
+			//values_i.print();
 			if (isdigit(token[0])) {
-				values_i.push(stoi(token));
+				values_i.push(stof(token));
 			}
 			else if (isOperator(token[0])) {
-				int b = values_i.top(); values_i.pop();
-				int a = values_i.top(); values_i.pop();
-				int result = applyOp(a, b, token[0]);
+				float b = values_i.top();
+				values_i.pop();
+				float a = values_i.top();
+				values_i.pop();
+				float result = applyOp(a, b, token[0]);
 				values_i.push(result);
 			}
 		}
@@ -120,16 +107,43 @@ public:
 			}
 			outp = outp + str;
 		}
+		outp = '(' + outp + ')';
 		return outp;
 	}
 
-	void work(std::string expr) {
-		expr = closeBrackets(expr);
-		std::cout << expr << std::endl;
-		std::string postfix = infixToPostfix(expr);
-		std::cout << "Postfix Expression: " << postfix << std::endl;
-		int result = evaluatePostfix(postfix);
-		std::cout << "Result: " << result << std::endl;
+	std::string removeSpaces(const std::string& input) {
+		std::string outp;
+		for (char ch : input) {
+			if (ch != ' ') {
+				outp += ch;
+			}
+		}
+		return outp;
 	}
 
+	std::string unarMinus(std::string& str) {
+		int j=3;
+		for (int i = 0; i < str.length()-1; i++) {
+			if (str[i] == '(' && str[i + 1] == '-') {
+				str.insert(i + 1, 1, '(');
+				str.insert(i + 2, 1, '0');
+				while (isdigit(str[i + j])) {
+					j++;
+				}
+				str.insert(i + j, 1, ')');
+				//std::cout << j << std::endl;
+			}
+		}
+		return str;
+	}
+	int work(std::string expr) {
+		expr = removeSpaces(expr);
+		expr = closeBrackets(expr);
+		expr = unarMinus(expr);
+		//std::cout << expr << std::endl;
+		std::string postfix = infixToPostfix(expr);
+		//std::cout << "Postfix Expression: " << postfix << std::endl;
+		float result = evaluatePostfix(postfix); 
+		return result;
+	}
 };

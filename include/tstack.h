@@ -66,4 +66,10 @@ public:
 		}
 		return res;
 	}
+	void print() {
+		for (int i = 0; i < n; i++) {
+			std::cout << stack[i] << ',';
+		}
+		std::cout << std::endl;
+	}
 };
