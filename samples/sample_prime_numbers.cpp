@@ -5,7 +5,9 @@ int main(int argc, char* argv[]) {
 	if (argc>1) {
 		std::string str = std::string(argv[1]);
 		std::cout << str << std::endl;
-		parser.work(str);
+		float res = parser.work(str);
+		std::cout << res << std::endl;
+
 	}
 	else {
 		std::string str;
