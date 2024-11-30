@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
 	}
 	else {
 		std::string str;
-		str = "-300 + 5 * ((-2) - 8*2)(";
+		str = "-1+4*(1+3)";
 		std::cout << str << std::endl;
 		float res = parser.work(str);
 		float res1 = -300 + 5 * ((-2) - 8 * 2);
