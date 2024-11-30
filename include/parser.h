@@ -33,12 +33,20 @@ public:
 		}
 		return 0;
 	}
+	float applyOp(float a, float b, char op) {
+		switch (op) {
+		case '+': return a + b;
+		case '-': return a - b;
+		case '*': return a * b;
+		case '/': return a / b;
+		}
+		return 0;
+	}
 
 	// Функция для преобразования инфиксного выражения в постфиксное
 	std::string infixToPostfix(std::string& expr) {
 		std::stringstream output;
 		TStack<char> operators;
-		bool op = operators.empty();
 		for (char c : expr) {
 			if (isdigit(c)) {
 				output << c;
@@ -71,24 +79,53 @@ public:
 
 	// Функция для вычисления значения постфиксного выражения
 	int evaluatePostfix(std::string& expr) {
-		TStack<int> values;
+		TStack<int> values_i;
+		TStack<float> values_f;
 		std::stringstream ss(expr);
 		std::string token;
 		while (ss >> token) {
 			if (isdigit(token[0])) {
-				values.push(stoi(token));
+				values_i.push(stoi(token));
 			}
 			else if (isOperator(token[0])) {
-				int b = values.top(); values.pop();
-				int a = values.top(); values.pop();
+				int b = values_i.top(); values_i.pop();
+				int a = values_i.top(); values_i.pop();
 				int result = applyOp(a, b, token[0]);
-				values.push(result);
+				values_i.push(result);
 			}
 		}
-		return values.top();
+		return values_i.top();
+	}
+
+	std::string closeBrackets(std::string& str) {
+		std::string outp;
+		int cOpen=0, cClose =0;
+		for (char c : str) {
+			if (c == '(') {
+				cOpen++;
+			}
+			if (c == ')') {
+				cClose++;
+			}
+		}
+		if (cOpen > cClose) {
+			outp = str;
+			for (int i = 0; i < cOpen - cClose; i++) {
+				outp = outp + ')';
+			}
+		}
+		if (cClose > cOpen) {
+			for (int i = 0; i < cClose - cOpen; i++) {
+				outp = outp + '(';
+			}
+			outp = outp + str;
+		}
+		return outp;
 	}
 
 	void work(std::string expr) {
+		expr = closeBrackets(expr);
+		std::cout << expr << std::endl;
 		std::string postfix = infixToPostfix(expr);
 		std::cout << "Postfix Expression: " << postfix << std::endl;
 		int result = evaluatePostfix(postfix);
