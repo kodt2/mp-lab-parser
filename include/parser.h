@@ -10,6 +10,162 @@ private:
 	
 public:
 
+#include <iostream>
+#include <string>
+#include <cctype> // для функции isdigit
+
+	enum State {
+			START,
+			EXPECT_DIGIT_OR_SIGN,
+			EXPECT_DIGIT,
+			EXPECT_DECIMAL_OR_OPERATOR,
+			EXPECT_OPERATOR,
+			OPEN_PARENTHESIS,
+			CLOSE_PARENTHESIS,
+			ERROR,
+			VALID
+	};
+
+	bool parse(const std::string& expression) {
+			State state = START;
+			size_t i = 0;
+			while (i < expression.length() && state != ERROR) {
+				char ch = expression[i];
+				switch (state) {
+				case START:
+					if (isspace(ch)) {
+						state = START;
+					}
+					else if (ch == '+' || ch == '-' || ch == '*' || ch == '/' || isdigit(ch)) {
+						state = EXPECT_DIGIT;
+					}
+					else if (ch == '(') {
+						state = OPEN_PARENTHESIS;
+					}
+					else {
+						state = ERROR;
+					}
+					break;
+				case EXPECT_DIGIT_OR_SIGN:
+					if (isdigit(ch)) {
+						state = EXPECT_DIGIT_OR_SIGN;
+					}
+					else if (ch == '.') {
+						state = EXPECT_DECIMAL_OR_OPERATOR;
+					}
+					else if (ch == '+' || ch == '-'|| ch=='*'||ch=='/') {
+						state = EXPECT_DIGIT;
+					}
+					else if (ch == '(') {
+						state = OPEN_PARENTHESIS;
+					}
+					else if (ch == ')') {
+						state = CLOSE_PARENTHESIS;
+					}
+					else {
+						state = ERROR;
+					}
+					break;
+				case EXPECT_DIGIT:
+					if (isdigit(ch)) {
+						state = EXPECT_DIGIT_OR_SIGN;
+					}
+					else if (ch == '.') {
+						state = EXPECT_DECIMAL_OR_OPERATOR;
+					}
+					else if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+						state = ERROR;
+					}
+					else if (ch == '(') {
+						state = OPEN_PARENTHESIS;
+					}
+					else if (ch == ')') {
+						state = ERROR;
+					}
+					else {
+						state = ERROR;
+					}
+					break;
+				case EXPECT_DECIMAL_OR_OPERATOR:
+					if (isdigit(ch)) {
+						state = EXPECT_DECIMAL_OR_OPERATOR;
+					}
+					else if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+						state = EXPECT_DIGIT;
+					}
+					else if (ch == ')') {
+						state = CLOSE_PARENTHESIS;
+					}
+					else {
+						state = ERROR;
+					}
+					break;
+				case EXPECT_OPERATOR:
+					if (isspace(ch)) {
+						state = EXPECT_OPERATOR;
+					}
+					else if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+						state = EXPECT_DIGIT_OR_SIGN;
+					}
+					else if (ch == '(') {
+						state = OPEN_PARENTHESIS;
+					}
+					else if (ch == ')') {
+						state = CLOSE_PARENTHESIS;
+					}
+					else {
+						state = ERROR;
+					}
+					break;
+				case OPEN_PARENTHESIS:
+					if (isdigit(ch)) {
+						state = EXPECT_DIGIT_OR_SIGN;
+					}
+					else if (ch == '+' || ch == '*' || ch == '/') {
+						state = ERROR;
+					}
+					else if (ch == '-') {
+						state = EXPECT_DIGIT;
+					}
+					else if (ch == '(') {
+						state = OPEN_PARENTHESIS;
+					}
+					else if (ch == ')') {
+						state = CLOSE_PARENTHESIS;
+					}
+					else {
+						state = ERROR;
+					}
+					break;
+				case CLOSE_PARENTHESIS:
+					if (ch == '+' || ch == '*') {
+					state = ERROR;
+					}
+					else if (ch == '/') {
+						state = EXPECT_DIGIT_OR_SIGN;
+					}
+					else if (ch == '-') {
+						state = EXPECT_DIGIT;
+						}
+					else if (isdigit(ch)) {
+						state = EXPECT_DIGIT_OR_SIGN;
+					}
+					else if (ch == ')') {
+						state = CLOSE_PARENTHESIS;
+					}
+					else {
+						state = ERROR;
+					}
+					break;
+				default:
+					state = ERROR;
+					break;
+				}
+				i++;
+		}
+		return state == EXPECT_OPERATOR || state == CLOSE_PARENTHESIS || state == VALID|| state==EXPECT_DIGIT_OR_SIGN;
+	};
+
 	bool isOperator(char c) {
 		return c == '+' || c == '-' || c == '*' || c == '/';
 	}
@@ -107,6 +263,9 @@ public:
 			}
 			outp = outp + str;
 		}
+		if (cClose == cOpen) {
+			outp = outp + str;
+		}
 		outp = '(' + outp + ')';
 		return outp;
 	}
@@ -118,6 +277,37 @@ public:
 				outp += ch;
 			}
 		}
+		return outp;
+	}
+
+	std::string remove_doub_operators(const std::string& input) {
+		std::stringstream ss(input);
+		std::string inp = input;
+		std::string outp;
+		for (int i = 0; i < inp.size()-1; i++) {
+			if (inp[i]=='-' && inp[i + 1]=='-') {
+				outp += " ";
+				inp[i] = ' ';
+			}
+			if (inp[i] == '+' && inp[i + 1] == '+') {
+				outp += " ";
+				inp[i] = ' ';
+			}
+			if (inp[i] == '*' && inp[i + 1] == '*') {
+				outp += " ";
+				inp[i] = ' ';
+			}
+			if (inp[i] == '/' && inp[i + 1] == '/') {
+				outp += " ";
+				inp[i] = ' ';
+			}
+			if (isOperator(inp[i]) && isOperator(inp[i + 1])) {
+				return outp;
+			}
+			outp += inp[i];
+		}
+		outp += inp[input.size() - 1];
+		
 		return outp;
 	}
 
@@ -139,11 +329,23 @@ public:
 	int work(std::string expr) {
 		expr = removeSpaces(expr);
 		expr = closeBrackets(expr);
-		expr = unarMinus(expr);
+		
 		//std::cout << expr << std::endl;
-		std::string postfix = infixToPostfix(expr);
-		//std::cout << "Postfix Expression: " << postfix << std::endl;
-		float result = evaluatePostfix(postfix); 
-		return result;
+		bool a = parse(expr);
+		
+		if (a) {
+			expr = unarMinus(expr);
+			//if (expr == "somthing strange piece of shit") {
+			//	std::cout << "somthing strange piece of shit" << std::endl;
+			//}
+			expr = removeSpaces(expr);
+			std::string postfix = infixToPostfix(expr);
+			//std::cout << "Postfix Expression: " << postfix << std::endl;
+			float result = evaluatePostfix(postfix);
+			return result;
+		}
+		else {
+			throw "wrong";
+		}
 	}
 };
