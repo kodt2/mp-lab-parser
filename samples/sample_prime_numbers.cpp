@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
 	}
 	else {
 		std::string str;
-		str = "(2*(8-9))";
+		str = "14.5 * (5.7 + 18.5 / 6.0 - 3.0) - 26.0 / (8.0 + 3.0)";
 		std::cout << str << std::endl;
 		float res;
 		try {

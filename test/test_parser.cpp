@@ -2,147 +2,147 @@
 #include <gtest.h>
 #include "parser.h"
 
-TEST(Parser, can)
+TEST(CalculatorParserTest, can)
 {
 	Parser parser;
 	float res = parser.work("1");
 	float res1 = 1;
 	ASSERT_EQ(res, res1);
 }
-TEST(Parser, can_unar_minus)
+TEST(CalculatorParserTest, can_unar_minus)
 {
 	Parser parser;
 	float res = parser.work("-1");
 	float res1 = -1;
 	ASSERT_EQ(res, res1);
 }
-TEST(TSet, can_summ)
+TEST(CalculatorParserTest, can_summ)
 {
 	Parser parser;
 	float res = parser.work("12+454");
 	float res1 = 12 + 454;
 	ASSERT_EQ(res, res1);
 }
-TEST(Parser, can_minus)
+TEST(CalculatorParserTest, can_minus)
 {
 	Parser parser;
 	float res = parser.work("45-9");
 	float res1 = 45 - 9;
-	ASSERT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_mul)
+TEST(CalculatorParserTest, can_mul)
 {
 	Parser parser;
 	float res = parser.work("78*23");
 	float res1 = 78 * 23;
-	ASSERT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_backets)
+TEST(CalculatorParserTest, can_backets)
 {
 	Parser parser;
 	float res = parser.work("2*(8-9)");
 	float res1 = 2 * (8 - 9);
-	ASSERT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_close_backest)
+TEST(CalculatorParserTest, can_close_backest)
 {
 	Parser parser;
 	float res = parser.work("2*(8-9");
 	float res1 = 2 * (8 - 9);
-	ASSERT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_diff_v1)
+TEST(CalculatorParserTest, can_diff_v1)
 {
 	Parser parser;
 	float res = parser.work("(14.0+25.0*(-35.0*3.0+3.0/4.0)+4.0)/2.0");
 	float res1 = (14.0 + 25.0 * (-35.0 * 3.0 + 3.0 / 4.0) + 4.0) / 2.0;
-	ASSERT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_diff_v2)
+TEST(CalculatorParserTest, can_diff_v2)
 {
 	Parser parser;
 	float res = parser.work("(23.0 + 45.0 * 12.0 - 18.0 / 3.0) + 56.0 * (32.0 - 7.0 / 2.0)");
 	float res1 = (23.0 + 45.0 * 12.0 - 18.0 / 3.0) + 56.0 * (32.0 - 7.0 / 2.0);
-	ASSERT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_diff_v3)
+TEST(CalculatorParserTest, can_diff_v3)
 {
 	Parser parser;
-	float res = parser.work("14.0 * (5.0 + 18.0 / 6.0 - 3.0) - 26.0 / (8.0 + 3.0)");
-	float res1 = 14.0 * (5.0 + 18.0 / 6.0 - 3.0) - 26.0 / (8.0 + 3.0);
-	ASSERT_EQ(res, res1);
+	double res = parser.work("14.5 * (5.7 + 18.5 / 6.0 - 3.0) - 26.0 / (8.0 + 3.0)");
+	double res1 = 14.5 * (5.7 + 18.5 / 6.0 - 3.0) - 26.0 / (8.0 + 3.0);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_diff_v4)
+TEST(CalculatorParserTest, can_diff_v4)
 {
 	Parser parser;
 	float res = parser.work("(11.0 - 9.0 / 3.0 + 2.0 * 7.0) * (16.0 / 4.0 - 5.0 + 14.0)");
 	float res1 = (11.0 - 9.0 / 3.0 + 2.0 * 7.0) * (16.0 / 4.0 - 5.0 + 14.0);
-	ASSERT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_diff_v5)
+TEST(CalculatorParserTest, can_diff_v5)
 {
 	Parser parser;
 	float res = parser.work("25.0 - (8.0 * 3.0 + 14.0 / 2.0 - 5.0) * 2.0 + 18.0");
 	float res1 = 25.0 - (8.0 * 3.0 + 14.0 / 2.0 - 5.0) * 2.0 + 18.0;
-	ASSERT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_diff_v6)
+TEST(CalculatorParserTest, can_diff_v6)
 {
 	Parser parser;
 	float res = parser.work("25.0 - (8.0 * 3.0 + 14.0 / 2.0 - 5.0) * 2.0 + 18.0");
 	float res1 = 25.0 - (8.0 * 3.0 + 14.0 / 2.0 - 5.0) * 2.0 + 18.0;
-	ASSERT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_diff_v7)
+TEST(CalculatorParserTest, can_diff_v7)
 {
 	Parser parser;
 	float res = parser.work("(42.0 / 6.0 + 7.0 * 5.0 - 3.0) - 14.0 + 20.0 / (2.0 + 3.0)");
 	float res1 = (42.0 / 6.0 + 7.0 * 5.0 - 3.0) - 14.0 + 20.0 / (2.0 + 3.0);
-	EXPECT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_diff_v8)
+TEST(CalculatorParserTest, can_diff_v8)
 {
 	Parser parser;
 	float res = parser.work("32.0 + (14.0 - 8.0 * 4.0 / 2.0) * (19.0 + 25.0)");
 	float res1 = 32.0 + (14.0 - 8.0 * 4.0 / 2.0) * (19.0 + 25.0);
-	ASSERT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_diff_v9)
+TEST(CalculatorParserTest, can_diff_v9)
 {
 	Parser parser;
 	float res = parser.work("(21.0 * 3.0 + 6.0 / 2.0 - 15.0) / (8.0 + 5.0 * 2.0)");
 	float res1 = (21.0 * 3.0 + 6.0 / 2.0 - 15.0) / (8.0 + 5.0 * 2.0);
-	ASSERT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_diff_v10)
+TEST(CalculatorParserTest, can_diff_v10)
 {
 	Parser parser;
 	float res = parser.work("(21.0 * 3.0 + 6.0 / 2.0 - 15.0) / (8.0 + 5.0 * 2.0)");
 	float res1 = (21.0 * 3.0 + 6.0 / 2.0 - 15.0) / (8.0 + 5.0 * 2.0);
-	ASSERT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_diff_v11)
+TEST(CalculatorParserTest, can_diff_v11)
 {
 	Parser parser;
 	float res = parser.work("17.0 + (9.0 / 3.0 - 5.0 * 2.0 + 18.0) * 6.0 / 2.0");
 	float res1 = 17.0 + (9.0 / 3.0 - 5.0 * 2.0 + 18.0) * 6.0 / 2.0;
-	ASSERT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_diff_v12)
+TEST(CalculatorParserTest, can_diff_v12)
 {
 	Parser parser;
 	float res = parser.work("(16.0 * 4.0 - 10.0 + 3.0 / 2.0) / (7.0 + 2.0 * 5.0)");
 	float res1 = (16.0 * 4.0 - 10.0 + 3.0 / 2.0) / (7.0 + 2.0 * 5.0);
-	ASSERT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_diff_v13)
+TEST(CalculatorParserTest, can_diff_v13)
 {
 	Parser parser;
 	float res = parser.work("(13.0 + 8.0 * 2.0 / 4.0 - 6.0) * (9.0 - 15.0 + 21.0)");
 	float res1 = (13.0 + 8.0 * 2.0 / 4.0 - 6.0) * (9.0 - 15.0 + 21.0);
-	ASSERT_EQ(res, res1);
+	EXPECT_FLOAT_EQ(res, res1);
 }
-TEST(Parser, can_final_boss)
+TEST(CalculatorParserTest, can_final_boss)
 {
 	Parser parser;
 	float res = parser.work("((23.5 * 4.8 + 5.9 - (13.5 / 2.1 - 9.6) * (4.5 + 18.3) / 3.2) - \
@@ -160,47 +160,125 @@ TEST(Parser, can_final_boss)
 TEST(CalculatorParserTest, InvalidCharacter) {
 	std::string expression = "3 + 5a - 2";
 	Parser parser;
-	EXPECT_ANY_THROW(parser.work("expression"));
-}
-
-TEST(CalculatorParserTest, UnbalancedParentheses) {
-	std::string expression = "(3 + 5 * (2 - 7)";
-	Parser parser;
-	EXPECT_ANY_THROW(parser.work("expression"));
+	EXPECT_ANY_THROW(parser.work(expression));
 }
 
 TEST(CalculatorParserTest, TwoOperatorsInARow) {
 	std::string expression = "5 + * 3";
 	Parser parser;
-	EXPECT_ANY_THROW(parser.work("expression"));
+	EXPECT_ANY_THROW(parser.work(expression));
 }
 
 TEST(CalculatorParserTest, StartsWithOperator) {
 	std::string expression = "* 7 + 3";
 	Parser parser;
-	EXPECT_ANY_THROW(parser.work("expression"));
+	EXPECT_ANY_THROW(parser.work(expression));
 }
 
 TEST(CalculatorParserTest, DoubleNegativeSigns) {
 	std::string expression = "5 + --3";
 	Parser parser;
-	EXPECT_ANY_THROW(parser.work("expression"));
+	EXPECT_ANY_THROW(parser.work(expression));
 }
 
 TEST(CalculatorParserTest, MultipleDecimalPoints) {
 	std::string expression = "2.3.4 + 5";
 	Parser parser;
-	EXPECT_ANY_THROW(parser.work("expression"));
+	EXPECT_ANY_THROW(parser.work(expression));
 }
 
 TEST(CalculatorParserTest, EndsWithOperator) {
 	std::string expression = "8 + 7 * ";
 	Parser parser;
-	EXPECT_ANY_THROW(parser.work("expression"));
+	EXPECT_ANY_THROW(parser.work(expression));
 }
 
 TEST(CalculatorParserTest, EmptyString) {
-	std::string expression = "";
+	std::string expression = "                          ";
 	Parser parser;
-	EXPECT_ANY_THROW(parser.work("expression"));
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, DoubleOperator1) {
+	std::string expression = "12 + + 5";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, MultiplyAndDivide2) {
+	std::string expression = "7 * / 2";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, DivisionByZero4) {
+	std::string expression = "8 / 0";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, MultipleDots5) {
+	std::string expression = "9.1.3 + 2";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, DoubleNegativeSigns7) {
+	std::string expression = "4 - --5";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, DoubleOperatorWithSign8) {
+	std::string expression = "10 * + - 3";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, OperatorAtEnd9) {
+	std::string expression = "(6 + 4) * (2 - )";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, StartsWithOperator10) {
+	std::string expression = "* 7 + 1";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, DivisionByZeroInParentheses11) {
+	std::string expression = "18 / (3 - 3)";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, MultiplyOperatorAfterAdd14) {
+	std::string expression = "3 + * 4";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, OperatorWithoutNumber16) {
+	std::string expression = "5 / (6 * )";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, StartsWithPlus17) {
+	std::string expression = "+ 9";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, MultipleDotsInDecimal18) {
+	std::string expression = "7.2.1 + 4";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, OperatorAtTheEnd19) {
+	std::string expression = "15 - 3 -";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
 }
