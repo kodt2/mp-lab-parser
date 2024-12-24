@@ -1,0 +1,47 @@
+[33mcommit 87f1bb94e39ad85e27e5761220894e1641c078a6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mnew[m[33m, [m[1;31morigin/new[m[33m)[m
+Author: kodt2 <kodt2005@yandex.ru>
+Date:   Tue Dec 24 10:32:16 2024 +0300
+
+    *
+
+[33mcommit a8720a85ba643cd74bead929d8fb4330032fe62f[m
+Author: kodt2 <kodt2005@yandex.ru>
+Date:   Tue Dec 24 10:30:02 2024 +0300
+
+    fix
+
+[33mcommit 9df01f40393ceeaa724da8f497e5c2ca8f7504c0[m
+Author: kodt2 <kodt2005@yandex.ru>
+Date:   Sat Dec 21 14:09:57 2024 +0300
+
+    Fix FSM bugs, add new tests, add new throw cases
+
+[33mcommit 7610ab3ab74a8227349c81ff63766f65bbe98391[m[33m ([m[1;32mmain[m[33m)[m
+Author: kodt2 <kodt2005@yandex.ru>
+Date:   Fri Dec 20 13:44:03 2024 +0300
+
+    Add FSM and parser tests:
+
+[33mcommit 3ad1e914b296a1d7e64843c352482da3ed9fe88d[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: kodt2 <kodt2005@yandex.ru>
+Date:   Sat Nov 30 21:35:54 2024 +0300
+
+    v1.01
+
+[33mcommit c3f2d9aba343f03ec64eb875a522aefda65d8bd4[m
+Author: kodt2 <kodt2005@yandex.ru>
+Date:   Sat Nov 30 16:24:53 2024 +0300
+
+    'backet'
+
+[33mcommit 37ac1d5a842a245deb7864dc127c092cdc02fb2d[m
+Author: kodt2 <kodt2005@yandex.ru>
+Date:   Fri Nov 29 02:54:00 2024 +0300
+
+    workable ver
+
+[33mcommit daaf7c668ff643b22414da68d622f01486960667[m
+Author: kodt2 <kodt2005@yandex.ru>
+Date:   Fri Nov 22 11:05:05 2024 +0300
+
+    first commit
