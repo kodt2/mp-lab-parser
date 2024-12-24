@@ -131,7 +131,7 @@ public:
 						state = OPEN_PARENTHESIS;
 					}
 					else if (ch == ')') {
-						state = CLOSE_PARENTHESIS;
+						state = ERROR;
 					}
 					else {
 						state = ERROR;
@@ -139,13 +139,13 @@ public:
 					break;
 				case CLOSE_PARENTHESIS:
 					if (ch == '+' || ch == '*') {
-					state = EXPECT_DIGIT_OR_SIGN;
+					state = EXPECT_DIGIT;
 					}
 					else if (ch == '/') {
-						state = EXPECT_DIGIT_OR_SIGN;
+						state = EXPECT_DIGIT;
 					}
 					else if (ch == '-') {
-						state = EXPECT_DIGIT_OR_SIGN;
+						state = EXPECT_DIGIT;
 						}
 					else if (isdigit(ch)) {
 						state = EXPECT_DIGIT_OR_SIGN;

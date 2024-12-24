@@ -282,3 +282,51 @@ TEST(CalculatorParserTest, OperatorAtTheEnd19) {
 	Parser parser;
 	EXPECT_ANY_THROW(parser.work(expression));
 }
+
+TEST(CalculatorParserTest, OperatorAtTheEnd20) {
+	std::string expression = "1-(2+3)+";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, OperatorAtTheEnd21) {
+	std::string expression = "(0/(-0)";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, OperatorAtTheEnd22) {
+	std::string expression = "(";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, OperatorAtTheEnd23) {
+	std::string expression = ")";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, OperatorAtEnd24) {
+	std::string expression = "(! + 4*( * )*2 - )";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, OperatorAtEnd25) {
+	std::string expression = "(1.....9)";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, OnlyOperators26) {
+	std::string expression = "++-*/";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}
+
+TEST(CalculatorParserTest, InvalidCommaUsage27) {
+	std::string expression = "3.14,159 + 2";
+	Parser parser;
+	EXPECT_ANY_THROW(parser.work(expression));
+}

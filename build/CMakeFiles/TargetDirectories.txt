@@ -1,0 +1,6 @@
+C:/Users/KODT/Desktop/git/mp-lab-parser/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/KODT/Desktop/git/mp-lab-parser/build/CMakeFiles/ZERO_CHECK.dir
+C:/Users/KODT/Desktop/git/mp-lab-parser/build/src/CMakeFiles/parser.dir
+C:/Users/KODT/Desktop/git/mp-lab-parser/build/samples/CMakeFiles/sample_prime_numbers.dir
+C:/Users/KODT/Desktop/git/mp-lab-parser/build/gtest/CMakeFiles/gtest.dir
+C:/Users/KODT/Desktop/git/mp-lab-parser/build/test/CMakeFiles/test_parser.dir
